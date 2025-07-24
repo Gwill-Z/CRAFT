@@ -28,7 +28,7 @@ Follow these steps to set up the environment.
 **1. Clone the Repository**
 
 ```bash
-git clone [https://github.com/Gwill-Z/CRAFT.git](https://github.com/Gwill-Z/CRAFT.git)
+git clone https://github.com/Gwill-Z/CRAFT.git
 cd CRAFT
 ```
 
@@ -52,6 +52,7 @@ Before running the scripts, you need to download the model and prepare the datas
 
 Our implementation uses [**microsoft/Florence-2-large**](https://huggingface.co/microsoft/Florence-2-large). Download the model snapshot and place it in the project's root directory. The final structure should look like this:
 
+```
 CRAFT/
 ├── Florence-2-large/
 │   ├── config.json
@@ -59,13 +60,13 @@ CRAFT/
 ├── datasets/
 ├── ...
 └── train_craft.py
-
+```
 **2. Prepare the Dataset**
 
 Download our CrossVLAD dataset from the following link: [**datasets**](https://drive.google.com/file/d/1DPmSPSYH6iXtuEPwRKeM_0rojLoFdGQ7/view?usp=drive_link)
 
 Unzip the dataset and place it inside the `datasets/` directory. The final structure should be:
-
+```
 CRAFT/
 ├── datasets/
 │   ├── CrossVLAD/
@@ -73,7 +74,7 @@ CRAFT/
 │   │   └── labels/
 ├── ...
 └── train_craft.py
-
+```
 ---
 
 ## ⚔️ Running the Attack
