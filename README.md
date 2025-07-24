@@ -16,7 +16,6 @@ We propose CRAFT, a novel cross-task adversarial attack benchmark for unified vi
 ## 🚀 Features
 
 - **Cross-Task Attack**: A single adversarial perturbation that fools a model on multiple vision-language tasks simultaneously.
-- **Multi-GPU Support**: Utilizes `torch.multiprocessing` for efficient attack generation across multiple GPUs.
 - **Extensible Framework**: Easily adaptable to evaluate new models and custom datasets.
 - **Comprehensive Evaluation**: Includes scripts for evaluating attack performance on four distinct tasks: Image Captioning, Object Detection, Region Categorization, and Object Localization.
 
