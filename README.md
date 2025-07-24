@@ -3,7 +3,7 @@
 
 This repository contains the official implementation of the paper: **"One Object, Multiple Lies: A Benchmark for Cross-task Adversarial Attack on Unified Vision-Language Models"**.
 
-We propose CRAFT, a novel cross-task adversarial attack benchmark for unified vision-language models. Our method generates a single perturbation to make the model "lie" across multiple different tasks (e.g., captioning, detection, VQA) about the same object.
+We propose CRAFT, a novel cross-task adversarial attack benchmark for unified vision-language models. Our method generates a single perturbation to make the model "lie" across multiple different tasks (e.g., captioning, detection) about the same object.
 
 <br>
 
