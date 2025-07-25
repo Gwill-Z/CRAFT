@@ -14,7 +14,7 @@ import importlib
 import argparse
 from datetime import datetime
 
-device = "cuda:1" if torch.cuda.is_available() else "cpu"
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
 torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 
 def setup_logging(output_dir):
@@ -192,9 +192,6 @@ class TargetChangeEvaluator(Evaluator):
         else:
             attack_success = False
         
-        # # 条件1：原始类别消失，新类别出现
-        # attack_success = original_category not in detected_labels and change_category in detected_labels
-        # no_attack_success = original_category not in original_detected_labels and change_category in original_detected_labels
         return attack_success, no_attack_success
 
     def is_successful_on_region_to_category(self, label, input_ids, pixel_values, image_path, inputs_x):
@@ -284,10 +281,8 @@ class TargetChangeEvaluator(Evaluator):
         return label["target_object_category"]
 
 def evaluate_attack(model, output_dir, IMAGE_DIR, LABELS_DIR):
-    # 设置日志
     logger = setup_logging(output_dir)
     logger.info(f"Starting evaluation in directory: {output_dir}")
-    # 获取当前日期，日月即可
     month_and_day = datetime.now().strftime("%m%d")
     ADV_IMAGE = output_dir / "adv_images"
     OUTPUT_JSON = output_dir / f"evaluate_result_{month_and_day}.json"
@@ -397,10 +392,9 @@ def evaluate_attack(model, output_dir, IMAGE_DIR, LABELS_DIR):
 
         total_samples += 1
         
-        # 有4个任务攻击成功
         if success_nums == 4:
             cnt_4 += 1
-        # 有3个任务攻击成功
+
         if success_nums >= 3:
             cnt_3 += 1
 

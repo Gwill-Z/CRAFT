@@ -56,15 +56,12 @@ class EvalModel(BaseEvalModel):
         patch_size = image_size // grid
         x1, y1, x2, y2 = box
         
-        # 向上取整得到第一个完全在框内的patch
         patch_x1 = (x1 + patch_size - 1) // patch_size
         patch_y1 = (y1 + patch_size - 1) // patch_size
         
-        # 向下取整得到最后一个完全在框内的patch
         patch_x2 = x2 // patch_size
         patch_y2 = y2 // patch_size
         
-        # 检查是否有完全在框内的patch
         if patch_x1 > patch_x2 or patch_y1 > patch_y2:
             return []
             
@@ -114,18 +111,6 @@ class EvalModel(BaseEvalModel):
     def get_image_features(self, pixel_values):
         outputs = self.model._encode_image(pixel_values)
         return outputs
-    
-    # def get_text_embeds(self, text):
-    #     texts = [template.format(text) for template in imagenet_templates]
-    #     # text = self.processor._construct_prompts(text)
-    #     inputs_ids = self.tokenizer(texts, return_tensors="pt", padding="longest", truncation=True, max_length=128)["input_ids"].to(self.device)
-    #     inputs_ids.requires_grad = False
-    #     outputs = self.model.get_input_embeddings()(inputs_ids)
-    #     pooled_output = outputs
-    #     pooled_output /= pooled_output.norm(dim=-1, keepdim=True)
-    #     pooled_output = pooled_output.mean(dim=0, keepdim=True)
-
-    #     return pooled_output
     
     def get_text_embeds(self, text):
         if text is list:

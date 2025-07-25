@@ -16,19 +16,14 @@ from torch.utils.data import DataLoader, Subset
 import torch.multiprocessing as mp
 import random
 import sys
-# 当前目录为根目录/train, 获取项目根目录
-root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# 添加所有可能的路径
-sys.path.extend([
-    str(root_dir),
-    str(root_dir + '/unifiedio2'),
 
-])
+root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 def tensor_to_image(tensor):
-    # 确保张量在CPU上
+
     tensor = tensor.detach().cpu()
-    if tensor.shape[0] == 3:  # 如果第一维是通道数
+    if tensor.shape[0] == 3: 
         tensor = tensor.permute(1, 2, 0)
     
     mean = torch.tensor([0.485, 0.456, 0.406])
@@ -93,7 +88,6 @@ class Trainer:
                 negative_embeds = self.model.get_text_embeds(negative_name)
                 negative_embeds = torch.mean(negative_embeds, dim=1)
             elif self.num_negative == 2:
-                # v2, use all other categories as negative
                 mscoco_categories_path = "datasets/mscoco_categories.json"
                 with open(mscoco_categories_path, "r") as f:
                     categories = json.load(f)["categories"]
@@ -116,7 +110,7 @@ class Trainer:
             best_loss = float("inf")
             margin = 0.9
             for _ in tqdm(range(iters), desc="Attacking"):
-                # get CLIP loss 
+
                 image_features = self.model.get_image_features(pixel_values + delta).to(self.device)
                 patch_features = image_features[:, token_indices, :]
                 patch_features = patch_features.mean(dim=1)
@@ -133,7 +127,6 @@ class Trainer:
                 elif self.num_negative == 0:
                     loss = F.relu(margin - positive_similarity).mean()
 
-                # get the gradients
                 delta.grad = torch.autograd.grad(loss, delta)[0]
                 with torch.no_grad():
                     delta.grad.sign_()
@@ -231,9 +224,9 @@ def parse_args():
     
     # Dataset arguments
     data_group = parser.add_argument_group('Dataset Configuration')
-    data_group.add_argument('--images_dir', type=str, default='datasets/CrossVLAD/transforming/images',
+    data_group.add_argument('--images_dir', type=str, default='datasets/CrossVLAD/images',
                            help='Path to images directory')
-    data_group.add_argument('--labels_dir', type=str, default='datasets/CrossVLAD/transforming/labels',
+    data_group.add_argument('--labels_dir', type=str, default='datasets/CrossVLAD/labels',
                            help='Path to labels directory')
     data_group.add_argument('--sample_nums', type=int, default=1000,
                            help='Number of samples to process')

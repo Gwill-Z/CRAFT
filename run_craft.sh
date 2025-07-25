@@ -1,12 +1,9 @@
 #!/bin/bash
 
-# 获取项目根目录的绝对路径
 PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
 
-# 添加项目根目录到PYTHONPATH
 export PYTHONPATH="$PROJECT_ROOT:$PYTHONPATH"
 
-# 切换到项目根目录
 cd "$PROJECT_ROOT"
 
 
